@@ -13,9 +13,9 @@
                     <p class="text-xs font-semibold">
                         <span class="px-3 py-1 rounded-full {{ 
                             $document->status === 'approved' ? 'bg-green-100 text-green-800' :
-                            $document->status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                            $document->status === 'rejected' ? 'bg-red-100 text-red-800' :
-                            'bg-gray-100 text-gray-800'
+    $document->status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+    $document->status === 'rejected' ? 'bg-red-100 text-red-800' :
+    'bg-gray-100 text-gray-800'
                         }}">
                             {{ ucfirst($document->status) }}
                         </span>
@@ -33,18 +33,11 @@
         <!-- Message Input -->
         <form id="messageForm" class="flex space-x-2">
             @csrf
-            <input 
-                type="text" 
-                id="messageInput" 
-                name="message" 
-                placeholder="Type your message..." 
+            <input type="text" id="messageInput" name="message" placeholder="Type your message..."
                 class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-            />
-            <button 
-                type="submit" 
-                class="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg hover:shadow-lg transition duration-300"
-            >
+                required />
+            <button type="submit"
+                class="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg hover:shadow-lg transition duration-300">
                 Send
             </button>
         </form>
@@ -75,7 +68,7 @@
                     messageEl.innerHTML = `
                         <div class="${isOwn ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-900'} px-4 py-2 rounded-lg max-w-xs">
                             <p class="text-xs font-semibold mb-1">${msg.user.name}</p>
-                            <p>${escapeHtml(msg.message)}</p>
+                            <div class="text-sm">${formatMessage(msg.message)}</div>
                             <p class="text-xs opacity-70 mt-1">${new Date(msg.created_at).toLocaleTimeString()}</p>
                         </div>
                     `;
@@ -88,10 +81,17 @@
             }
         }
 
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
+        function formatMessage(text) {
+            text = escapeHtml(text);
+            text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+            text = text.replace(/^### (.+)$/gm, '<h3 style="font-weight: bold; margin: 0.5em 0;">$1</h3>');
+            text = text.replace(/^## (.+)$/gm, '<h2 style="font-weight: bold; margin: 0.5em 0;">$1</h2>');
+            text = text.replace(/^# (.+)$/gm, '<h1 style="font-weight: bold; margin: 0.5em 0;">$1</h1>');
+            text = text.replace(/^-\s*\[\s*\]\s*(.+)$/gm, '<li style="margin-left: 1.5em; list-style-type: none;"><input type="checkbox" disabled> $1</li>');
+            text = text.replace(/^-\s*\[x\]\s*(.+)$/igm, '<li style="margin-left: 1.5em; list-style-type: none;"><input type="checkbox" disabled checked> $1</li>');
+            text = text.replace(/^- (?!<input)(.+)$/gm, '<li style="margin-left: 1.5em;">$1</li>');
+            text = text.replace(/\n/g, '<br>');
+            return text;
         }
 
         document.getElementById('messageForm').addEventListener('submit', async (e) => {

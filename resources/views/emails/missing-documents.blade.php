@@ -6,7 +6,7 @@ Hello {{ $user->name }},
 We noticed that your profile is missing the following required documents:
 
 @foreach ($missingDocuments as $doc)
-- **{{ $doc['doc_type'] }}**: {{ $doc['description'] }}
+    - **{{ $doc['doc_type'] }}**: {{ $doc['description'] }}
 @endforeach
 
 Please upload these documents to complete your profile and proceed with the next steps.
@@ -17,9 +17,9 @@ Upload Documents
 
 ---
 
-**Analyst Saferwealth**  
-Sean Cavanagh, Founder & CEO  
-416-545-9559  
+**SaferWealth Analyst**
+Sean Cavanagh, Founder & CEO
+416-545-9559
 [info@saferwealth.com](mailto:info@saferwealth.com)
 
 [Unsubscribe from emails]({{ route('email.unsubscribe', $user->ensureEmailUnsubscribeToken()) }})

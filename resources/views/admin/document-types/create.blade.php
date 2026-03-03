@@ -24,7 +24,7 @@
                             </label>
                             <input type="text" id="doc_type" name="doc_type" value="{{ old('doc_type') }}" 
                                 placeholder="e.g., Government ID, Proof of Address" required
-                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 transition-all">
+                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-900 transition-all">
                             @error('doc_type')
                                 <p class="text-red-600 text-sm mt-2 flex items-center gap-1">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -40,7 +40,7 @@
                             <label for="description" class="block text-sm font-semibold text-gray-900 mb-2">Description</label>
                             <textarea id="description" name="description" rows="4" 
                                 placeholder="Enter a brief description of this document type..."
-                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 transition-all resize-none">{{ old('description') }}</textarea>
+                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-900 transition-all resize-none">{{ old('description') }}</textarea>
                             @error('description')
                                 <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
                             @enderror
@@ -48,9 +48,9 @@
 
                         <!-- Checkboxes Row -->
                         <div class="grid grid-cols-2 gap-6">
-                            <div class="flex items-start gap-3 p-4 border border-gray-200 rounded-lg hover:bg-blue-50 transition-colors">
+                            <div class="flex items-start gap-3 p-4 border border-gray-200 rounded-lg hover:bg-teal-50 transition-colors">
                                 <input type="checkbox" id="required" name="required" value="1" {{ old('required') ? 'checked' : '' }}
-                                    class="w-5 h-5 mt-0.5 rounded border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500 cursor-pointer">
+                                    class="w-5 h-5 mt-0.5 rounded border-gray-300 text-teal-600 focus:ring-2 focus:ring-teal-500 cursor-pointer">
                                 <div>
                                     <label for="required" class="text-sm font-semibold text-gray-900 cursor-pointer">Mark as Required</label>
                                     <p class="text-xs text-gray-600 mt-1">Clients must submit this document</p>
@@ -72,7 +72,7 @@
                             <label for="sort_order" class="block text-sm font-semibold text-gray-900 mb-2">Sort Order</label>
                             <input type="number" id="sort_order" name="sort_order" value="{{ old('sort_order', 0) }}"
                                 placeholder="Enter the display order (0-indexed)"
-                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 transition-all">
+                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-900 transition-all">
                             @error('sort_order')
                                 <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
                             @enderror
@@ -80,7 +80,7 @@
 
                         <!-- Form Actions -->
                         <div class="flex gap-4 pt-4 border-t border-gray-200">
-                            <button type="submit" class="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2.5 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-200">
+                            <button type="submit" class="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white px-6 py-2.5 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-200">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                                 </svg>

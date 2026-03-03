@@ -28,10 +28,10 @@
 
             <!-- Storage Settings Card -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
-                <div class="px-6 py-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
+                <div class="px-6 py-4 bg-gradient-to-r from-teal-50 to-emerald-50 border-b border-gray-200">
                     <div class="flex items-center gap-3">
-                        <div class="p-2 bg-blue-100 rounded-lg">
-                            <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                        <div class="p-2 bg-teal-100 rounded-lg">
+                            <svg class="w-5 h-5 text-teal-600" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4.5-9 3 6 2.5-4 4 8z"></path>
                             </svg>
                         </div>
@@ -50,7 +50,7 @@
                             <div class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition cursor-pointer">
                                 <input type="radio" id="local_storage" name="use_local_storage" value="1" 
                                     {{ env('USE_LOCAL_STORAGE', true) ? 'checked' : '' }}
-                                    class="w-4 h-4 text-blue-600 border-gray-300">
+                                    class="w-4 h-4 text-teal-600 border-gray-300">
                                 <label for="local_storage" class="ml-3 cursor-pointer flex-1">
                                     <p class="font-semibold text-gray-900">Local Storage</p>
                                     <p class="text-sm text-gray-600">Store files on your server (storage/app directory)</p>
@@ -60,7 +60,7 @@
                             <div class="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition cursor-pointer">
                                 <input type="radio" id="s3_storage" name="use_local_storage" value="0" 
                                     {{ !env('USE_LOCAL_STORAGE', true) ? 'checked' : '' }}
-                                    class="w-4 h-4 text-blue-600 border-gray-300">
+                                    class="w-4 h-4 text-teal-600 border-gray-300">
                                 <label for="s3_storage" class="ml-3 cursor-pointer flex-1">
                                     <p class="font-semibold text-gray-900">Amazon S3</p>
                                     <p class="text-sm text-gray-600">Store files on AWS S3 (requires S3 settings configured below)</p>
@@ -69,7 +69,7 @@
                         </div>
 
                         <div class="flex justify-end pt-4 border-t border-gray-200">
-                            <button type="submit" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2.5 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all">
+                            <button type="submit" class="inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white px-6 py-2.5 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
@@ -252,10 +252,10 @@
 
             <!-- SES Settings Card -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
-                <div class="px-6 py-4 bg-gradient-to-r from-blue-50 to-cyan-50 border-b border-gray-200">
+                <div class="px-6 py-4 bg-gradient-to-r from-teal-50 to-cyan-50 border-b border-gray-200">
                     <div class="flex items-center gap-3">
-                        <div class="p-2 bg-blue-100 rounded-lg">
-                            <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                        <div class="p-2 bg-teal-100 rounded-lg">
+                            <svg class="w-5 h-5 text-teal-600" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
                                 <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
                             </svg>
@@ -279,7 +279,7 @@
                                 <input type="text" id="aws_ses_key" name="aws_ses_key" 
                                     value="{{ $settings['ses']['aws_ses_key'] ?? '' }}"
                                     placeholder="AKIAIOSFODNN7EXAMPLE"
-                                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 transition-all" required>
+                                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-900 transition-all" required>
                                 @error('aws_ses_key')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
@@ -293,7 +293,7 @@
                                     <input type="password" id="aws_ses_secret" name="aws_ses_secret" 
                                         value="{{ $settings['ses']['aws_ses_secret'] ?? '' }}"
                                         placeholder="Your secret"
-                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 transition-all" required>
+                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-900 transition-all" required>
                                     <button type="button" onclick="togglePassword(this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -313,7 +313,7 @@
                                 <input type="text" id="aws_ses_region" name="aws_ses_region" 
                                     value="{{ $settings['ses']['aws_ses_region'] ?? '' }}"
                                     placeholder="us-east-2"
-                                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 transition-all" required>
+                                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-900 transition-all" required>
                                 @error('aws_ses_region')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
@@ -326,7 +326,7 @@
                                 <input type="email" id="aws_ses_from_email" name="aws_ses_from_email" 
                                     value="{{ $settings['ses']['aws_ses_from_email'] ?? '' }}"
                                     placeholder="noreply@example.com"
-                                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 transition-all" required>
+                                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-900 transition-all" required>
                                 @error('aws_ses_from_email')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
@@ -334,7 +334,7 @@
                         </div>
 
                         <div class="flex justify-end pt-4 border-t border-gray-200">
-                            <button type="submit" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-6 py-2.5 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all">
+                            <button type="submit" class="inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white px-6 py-2.5 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
@@ -414,6 +414,81 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
                                 Save Bedrock Settings
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Google OAuth Settings Card -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+                <div class="px-6 py-4 bg-gradient-to-r from-emerald-50 to-teal-50 border-b border-gray-200">
+                    <div class="flex items-center gap-3">
+                        <div class="p-2 bg-emerald-100 rounded-lg">
+                            <svg class="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <title>Google</title>
+                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900">Google Sign-in Settings</h3>
+                            <p class="text-sm text-gray-600">Configure Google OAuth credentials for client authentication</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <form action="{{ route('admin.settings.updateGoogle') }}" method="POST" class="space-y-4">
+                        @csrf
+                        @method('patch')
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="google_client_id" class="block text-sm font-semibold text-gray-900 mb-2">
+                                    Google Client ID <span class="text-red-600">*</span>
+                                </label>
+                                <input type="text" id="google_client_id" name="google_client_id" 
+                                    value="{{ $settings['google']['client_id'] ?? '' }}"
+                                    placeholder="Your Google Client ID"
+                                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-gray-900 transition-all" required>
+                                @error('google_client_id')
+                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <label for="google_client_secret" class="block text-sm font-semibold text-gray-900 mb-2">
+                                    Google Client Secret <span class="text-red-600">*</span>
+                                </label>
+                                <div class="relative">
+                                    <input type="password" id="google_client_secret" name="google_client_secret" 
+                                        value="{{ $settings['google']['client_secret'] ?? '' }}"
+                                        placeholder="Your Google Client Secret"
+                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-gray-900 transition-all" required>
+                                    <button type="button" onclick="togglePassword(this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                @error('google_client_secret')
+                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <div class="mt-2 text-sm text-gray-600 p-3 bg-gray-50 rounded border border-gray-200">
+                            <strong>Authorized redirect URI:</strong> <code>{{ env('APP_URL') }}/auth/google/callback</code>
+                        </div>
+
+                        <div class="flex justify-end pt-4 border-t border-gray-200">
+                            <button type="submit" class="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-6 py-2.5 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Save Google Settings
                             </button>
                         </div>
                     </form>

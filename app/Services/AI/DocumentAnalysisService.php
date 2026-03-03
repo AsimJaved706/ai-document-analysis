@@ -33,7 +33,7 @@ class DocumentAnalysisService
             'region' => env('BEDROCK_REGION', env('AWS_DEFAULT_REGION', 'us-east-2')),
             'version' => 'latest',
         ]);
-        
+
         // Use Claude 3 Sonnet for better performance on document analysis
         $this->modelId = env('BEDROCK_MODEL_ID', 'anthropic.claude-3-sonnet-20240229-v1:0');
     }
@@ -398,7 +398,7 @@ PROMPT;
                 ]),
             ]);
 
-            $response = json_decode((string)$result['body'], true);
+            $response = json_decode((string) $result['body'], true);
 
             return [
                 'success' => true,
@@ -590,7 +590,7 @@ PROMPT;
                 'validation_checks' => is_array($parsed['validation_checks'] ?? null) ? $parsed['validation_checks'] : [],
                 'risk_flags' => is_array($parsed['risk_flags'] ?? null) ? $parsed['risk_flags'] : [],
                 'missing_fields' => is_array($parsed['missing_fields'] ?? null) ? $parsed['missing_fields'] : [],
-                'confidence_score' => (float)($parsed['confidence_score'] ?? 0),
+                'confidence_score' => (float) ($parsed['confidence_score'] ?? 0),
             ];
         }
 
@@ -679,9 +679,12 @@ PROMPT;
      */
     protected function getSystemPrompt(): string
     {
-        return <<<'PROMPT'
+        $currentDate = now()->toDateString();
+        return <<<PROMPT
 🧠 AI BUSINESS LOAN CASE ANALYST & QA AUDITOR
 You are an AI Financial Case Analyst processing business loan applications.
+The current date is {$currentDate}. Do not treat recent dates (like 2025 or 2026) as future-dated.
+
 Your responsibilities are to:
 - Classify each uploaded document according to the required file list
 - Extract key financial, legal, and identity data

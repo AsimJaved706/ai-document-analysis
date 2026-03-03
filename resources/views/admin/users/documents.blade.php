@@ -37,12 +37,12 @@
                     @foreach($documents as $doc)
                         <a href="#" 
                            onclick="loadDocumentMessages({{ $doc->id }}); return false;"
-                           class="block p-4 hover:bg-blue-50 border-b cursor-pointer transition document-item"
+                           class="block p-4 hover:bg-teal-50 border-b cursor-pointer transition document-item"
                            data-doc-id="{{ $doc->id }}">
                             <div class="text-sm font-medium truncate">{{ $doc->original_filename }}</div>
                             <div class="text-xs text-gray-500 mt-1">{{ $doc->doc_type }}</div>
                             <div class="text-xs mt-2 flex items-center gap-2">
-                                <span class="inline-flex items-center gap-1 bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">
+                                <span class="inline-flex items-center gap-1 bg-teal-100 text-teal-800 px-2 py-0.5 rounded-full">
                                     <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm3.293 1.293a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L7.586 10 5.293 7.707a1 1 0 010-1.414zM11 12a1 1 0 100 2h3a1 1 0 100-2h-3z"/></svg>
                                     {{ $doc->messages_count }} message{{ $doc->messages_count != 1 ? 's' : '' }}
                                 </span>
@@ -65,7 +65,7 @@
 
                 <div id="chatPanel" class="hidden flex-1 flex flex-col">
                     <!-- Header -->
-                    <div class="border-b p-4 bg-gradient-to-r from-blue-50 to-indigo-50">
+                    <div class="border-b p-4 bg-gradient-to-r from-teal-50 to-emerald-50">
                         <h3 id="docName" class="font-semibold text-lg"></h3>
                         <p id="docInfo" class="text-xs text-gray-500 mt-1"></p>
                     </div>
@@ -82,10 +82,10 @@
                             <input type="text" 
                                    id="messageInput" 
                                    placeholder="Type your reply..." 
-                                   class="flex-1 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                   class="flex-1 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                                    required
                                    autocomplete="off">
-                            <button type="submit" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-3 rounded-lg hover:from-blue-700 hover:to-indigo-700 font-medium transition-all shadow-md hover:shadow-lg">
+                            <button type="submit" class="bg-gradient-to-r from-teal-600 to-emerald-600 text-white px-8 py-3 rounded-lg hover:from-teal-700 hover:to-emerald-700 font-medium transition-all shadow-md hover:shadow-lg">
                                 Send Reply
                             </button>
                         </form>
@@ -103,8 +103,8 @@ function loadDocumentMessages(docId) {
     currentDocId = docId;
     
     // Highlight selected document
-    document.querySelectorAll('.document-item').forEach(el => el.classList.remove('bg-blue-50', 'border-l-4', 'border-blue-600'));
-    document.querySelector(`[data-doc-id="${docId}"]`).classList.add('bg-blue-50', 'border-l-4', 'border-blue-600');
+    document.querySelectorAll('.document-item').forEach(el => el.classList.remove('bg-teal-50', 'border-l-4', 'border-teal-600'));
+    document.querySelector(`[data-doc-id="${docId}"]`).classList.add('bg-teal-50', 'border-l-4', 'border-teal-600');
     
     fetch(`/admin/users/documents/${docId}/messages`)
         .then(r => {
@@ -129,7 +129,7 @@ function loadDocumentMessages(docId) {
                             <div class="text-xs text-gray-500 mb-1 ${msg.is_admin ? 'text-right mr-1' : 'ml-1'}">
                                 ${msg.user_name} ${msg.is_admin ? '(Admin)' : '(Client)'}
                             </div>
-                            <div class="px-4 py-3 rounded-lg ${msg.is_admin ? 'bg-gradient-to-br from-blue-600 to-indigo-600 text-white' : 'bg-white border border-gray-200 text-gray-900'} shadow-sm">
+                            <div class="px-4 py-3 rounded-lg ${msg.is_admin ? 'bg-gradient-to-br from-teal-600 to-emerald-600 text-white' : 'bg-white border border-gray-200 text-gray-900'} shadow-sm">
                                 ${escapeHtml(msg.message)}
                             </div>
                             <div class="text-xs text-gray-400 mt-1 ${msg.is_admin ? 'text-right mr-1' : 'ml-1'}">
@@ -196,7 +196,7 @@ function sendMessage(e) {
                     <div class="text-xs text-gray-500 mb-1 text-right mr-1">
                         ${data.message.user_name} (Admin)
                     </div>
-                    <div class="px-4 py-3 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-sm">
+                    <div class="px-4 py-3 rounded-lg bg-gradient-to-br from-teal-600 to-emerald-600 text-white shadow-sm">
                         ${escapeHtml(data.message.message)}
                     </div>
                     <div class="text-xs text-gray-400 mt-1 text-right mr-1">

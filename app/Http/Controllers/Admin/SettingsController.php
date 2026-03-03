@@ -36,6 +36,10 @@ class SettingsController extends Controller
                 'aws_ses_region' => $this->getEnvValue('AWS_SES_REGION'),
                 'aws_ses_from_email' => $this->getEnvValue('MAIL_FROM_ADDRESS'),
             ],
+            'google' => [
+                'client_id' => $this->getEnvValue('GOOGLE_CLIENT_ID'),
+                'client_secret' => $this->getEnvValue('GOOGLE_CLIENT_SECRET'),
+            ],
         ];
 
         return view('admin.settings.index', compact('settings'));
@@ -50,7 +54,7 @@ class SettingsController extends Controller
 
         $content = file_get_contents($envFile);
         $pattern = '/^' . preg_quote($key) . '=(.*)$/m';
-        
+
         if (preg_match($pattern, $content, $matches)) {
             $value = $matches[1];
             // Remove quotes if present
@@ -163,10 +167,29 @@ class SettingsController extends Controller
         return redirect()->route('admin.settings.index')->with('success', 'Textract settings updated successfully!');
     }
 
+    public function updateGoogle(Request $request)
+    {
+        $validated = $request->validate([
+            'google_client_id' => 'required|string',
+            'google_client_secret' => 'required|string',
+        ]);
+
+        $this->updateEnvFile([
+            'GOOGLE_CLIENT_ID' => $validated['google_client_id'],
+            'GOOGLE_CLIENT_SECRET' => $validated['google_client_secret'],
+        ]);
+
+        if ($request->wantsJson()) {
+            return response()->json(['success' => true, 'message' => 'Google OAuth settings updated successfully!']);
+        }
+
+        return redirect()->route('admin.settings.index')->with('success', 'Google OAuth settings updated successfully!');
+    }
+
     private function updateEnvFile(array $values)
     {
         $envFile = base_path('.env');
-        
+
         if (!file_exists($envFile)) {
             // Create the file if it doesn't exist
             file_put_contents($envFile, '');
@@ -177,16 +200,16 @@ class SettingsController extends Controller
         foreach ($values as $key => $value) {
             // Escape special characters but preserve the value
             $escapedValue = $value;
-            
+
             // Check if value contains special characters that need quoting
             if (preg_match('/["\s$&]/', $value)) {
                 $escapedValue = '"' . str_replace('"', '\\"', $value) . '"';
             } else {
                 $escapedValue = '"' . $value . '"';
             }
-            
+
             $pattern = '/^' . preg_quote($key) . '=(.*)$/m';
-            
+
             if (preg_match($pattern, $content)) {
                 // Replace existing key
                 $content = preg_replace($pattern, "{$key}={$escapedValue}", $content);
@@ -200,7 +223,7 @@ class SettingsController extends Controller
         if (!file_put_contents($envFile, $content)) {
             throw new \Exception('Unable to write to .env file. Check file permissions.');
         }
-        
+
         // Clear config cache to pick up new values
         \Artisan::call('config:clear');
     }

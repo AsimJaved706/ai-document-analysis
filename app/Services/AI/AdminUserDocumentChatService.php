@@ -14,7 +14,7 @@ class AdminUserDocumentChatService
 {
     protected BedrockRuntimeClient $bedrockClient;
     protected string $modelId;
-    protected int $maxTokens = 2048;
+    protected int $maxTokens = 4096;
 
     public function __construct()
     {
@@ -202,8 +202,11 @@ class AdminUserDocumentChatService
 
     protected function buildSystemPrompt(string $context): string
     {
-        return <<<'PROMPT'
+        $currentDate = now()->toDateString();
+
+        return <<<PROMPT
 You are an expert AI Financial Analyst assistant helping an admin review a single client's full document set.
+The current date is {$currentDate}. Do not treat recent dates (like 2025 or 2026) as future-dated.
 
 You have access to:
 1. All uploaded documents for this client
@@ -274,7 +277,7 @@ PROMPT . "\n\n" . $context;
                 ]),
             ]);
 
-            $response = json_decode((string)$result['body'], true);
+            $response = json_decode((string) $result['body'], true);
 
             return [
                 'success' => true,
@@ -287,7 +290,7 @@ PROMPT . "\n\n" . $context;
             return [
                 'success' => false,
                 'error' => $e->getMessage(),
-                'error_code' => $e->getAwsErrorDetails()['Code'] ?? 'BEDROCK_ERROR',
+                'error_code' => $e->getAwsErrorCode() ?? 'BEDROCK_ERROR',
             ];
         } catch (Exception $e) {
             return [

@@ -7,12 +7,8 @@
         <!-- Header -->
         <div class="flex items-center justify-between p-4 border-b border-white/10">
             <div x-show="sidebarOpen" class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-teal-500 to-emerald-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                    </svg>
-                </div>
-                <span class="text-lg font-bold whitespace-nowrap">Analyst Saferwealth</span>
+                <x-application-logo class="w-10 h-10 text-white flex-shrink-0" />
+                <span class="text-[18px] font-normal text-white tracking-[0.1em] whitespace-nowrap" style="font-family: 'quicksand', sans-serif;">SaferWealth Analyst</span>
             </div>
             <button @click="sidebarOpen = !sidebarOpen" class="p-1.5 hover:bg-white/10 rounded-lg transition flex-shrink-0">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -98,6 +94,14 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.856-1.487M15 10a3 3 0 11-6 0 3 3 0 016 0zM6 20h12a6 6 0 00-6-6 6 6 0 00-6 6z"></path>
                     </svg>
                     <span x-show="sidebarOpen" class="text-sm font-medium">Users</span>
+                </a>
+
+                <a href="{{ route('admin.email-templates.index') }}" 
+                   class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors {{ request()->routeIs('admin.email-templates.*') ? 'bg-emerald-600 text-white' : 'text-emerald-100/90 hover:bg-white/10' }}">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                    <span x-show="sidebarOpen" class="text-sm font-medium">Email Templates</span>
                 </a>
 
                 <a href="{{ route('admin.settings.index') }}" 

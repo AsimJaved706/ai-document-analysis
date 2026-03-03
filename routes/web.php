@@ -53,14 +53,16 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/admin/clients/{user}', [AdminDashboardController::class, 'showClient'])->name('admin.clients.show');
     Route::get('/admin/clients/{user}/heartbeat', [AdminDashboardController::class, 'clientHeartbeat'])->name('admin.clients.heartbeat');
     Route::patch('/admin/clients/{user}/profile-update-required', [AdminDashboardController::class, 'flagProfileUpdateRequired'])->name('admin.clients.profile-update-required');
-    Route::get('/admin/clients/{user}/email-logs', [AdminDashboardController::class, 'emailLogs'])->name('admin.clients.email-logs');    Route::get('/admin/chats', [AdminChatController::class, 'list'])->name('admin.chats.list');    Route::get('/admin/clients/{user}/chats', [AdminChatController::class, 'index'])->name('admin.chats.index');
+    Route::get('/admin/clients/{user}/email-logs', [AdminDashboardController::class, 'emailLogs'])->name('admin.clients.email-logs');
+    Route::get('/admin/chats', [AdminChatController::class, 'list'])->name('admin.chats.list');
+    Route::get('/admin/clients/{user}/chats', [AdminChatController::class, 'index'])->name('admin.chats.index');
     Route::get('/admin/clients/{user}/chats/{document}', [AdminChatController::class, 'show'])->name('admin.chats.show');
     Route::patch('/admin/documents/{document}/status/{status}', [AdminDashboardController::class, 'markDocumentStatus'])->name('admin.documents.status');
-    
+
     // Document Type Management
     Route::resource('/admin/document-types', DocumentTypeController::class, ['as' => 'admin']);
     Route::post('/admin/document-types/reorder', [DocumentTypeController::class, 'reorder'])->name('admin.document-types.reorder');
-    
+
     // User Management
     Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
     Route::post('/admin/users', [UserController::class, 'store'])->name('admin.users.store');
@@ -70,7 +72,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/admin/users/{user}/documents', [UserController::class, 'documents'])->name('admin.users.documents');
     Route::get('/admin/users/documents/{document}/messages', [UserController::class, 'documentMessages'])->name('admin.users.documents.messages');
     Route::post('/admin/users/documents/{document}/messages', [UserController::class, 'sendDocumentMessage'])->name('admin.users.documents.messages.send');
-    
+
     // Settings Management
     Route::get('/admin/settings', [SettingsController::class, 'index'])->name('admin.settings.index');
     Route::patch('/admin/settings/storage', [SettingsController::class, 'updateStorage'])->name('admin.settings.updateStorage');
@@ -78,7 +80,13 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::patch('/admin/settings/textract', [SettingsController::class, 'updateTextract'])->name('admin.settings.updateTextract');
     Route::patch('/admin/settings/bedrock', [SettingsController::class, 'updateBedrock'])->name('admin.settings.updateBedrock');
     Route::patch('/admin/settings/ses', [SettingsController::class, 'updateSES'])->name('admin.settings.updateSES');
-    
+    Route::patch('/admin/settings/google', [SettingsController::class, 'updateGoogle'])->name('admin.settings.updateGoogle');
+
+    // Email Templates
+    Route::get('/admin/email-templates', [\App\Http\Controllers\Admin\EmailTemplateController::class, 'index'])->name('admin.email-templates.index');
+    Route::get('/admin/email-templates/{name}/edit', [\App\Http\Controllers\Admin\EmailTemplateController::class, 'edit'])->name('admin.email-templates.edit');
+    Route::put('/admin/email-templates/{name}', [\App\Http\Controllers\Admin\EmailTemplateController::class, 'update'])->name('admin.email-templates.update');
+
     // Document Chat (AI analysis conversation)
     Route::get('/admin/documents/chat', [DocumentChatController::class, 'index'])->name('admin.documents.chat');
     Route::get('/admin/documents/chat/users/{user}/documents', [DocumentChatController::class, 'userDocuments'])->name('admin.documents.chat.user.documents');
@@ -95,7 +103,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/admin/users/document-chat', [UserDocumentChatController::class, 'index'])->name('admin.users.document-chat.index');
     Route::get('/admin/users/{user}/document-chat/conversation', [UserDocumentChatController::class, 'conversation'])->name('admin.users.document-chat.conversation');
     Route::post('/admin/users/document-chat/conversations/{conversation}/messages', [UserDocumentChatController::class, 'sendMessage'])->name('admin.users.document-chat.messages.store');
-    
+
     // Job Tracking
     Route::get('/admin/jobs', [JobTrackingController::class, 'index'])->name('admin.jobs.index');
     Route::post('/admin/jobs/{job}/retry', [JobTrackingController::class, 'retryFailed'])->name('admin.jobs.retry-failed');
@@ -109,7 +117,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+use App\Http\Controllers\Auth\GoogleAuthController;
+
+// Google OAuth
+Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('auth.google');
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
+
 // SES webhook for bounce/complaint handling
 Route::post('/api/ses-webhook', [SESWebhookController::class, 'handle'])->name('ses.webhook');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
+
+// Static Legal Pages
+Route::view('/legal', 'legal')->name('legal');
+Route::view('/privacy-policy', 'privacy')->name('privacy');
+Route::view('/accessibility-statement', 'accessibility')->name('accessibility');

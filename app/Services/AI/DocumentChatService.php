@@ -25,7 +25,7 @@ class DocumentChatService
 {
     protected BedrockRuntimeClient $bedrockClient;
     protected string $modelId;
-    protected int $maxTokens = 2048;
+    protected int $maxTokens = 4096;
 
     public function __construct()
     {
@@ -33,7 +33,7 @@ class DocumentChatService
             'region' => env('BEDROCK_REGION', env('AWS_DEFAULT_REGION', 'us-east-2')),
             'version' => 'latest',
         ]);
-        
+
         $this->modelId = env('BEDROCK_MODEL_ID', 'anthropic.claude-3-sonnet-20240229-v1:0');
     }
 
@@ -139,7 +139,7 @@ class DocumentChatService
     protected function buildMessageHistory(DocumentConversation $conversation): array
     {
         $messages = [];
-        
+
         // Get last 10 messages for context (avoid token limit)
         $chatMessages = $conversation->messages()
             ->orderBy('created_at')
@@ -205,8 +205,11 @@ CONTEXT;
      */
     protected function buildChatSystemPrompt(string $documentContext): string
     {
-        return <<<'PROMPT'
+        $currentDate = now()->toDateString();
+
+        return <<<PROMPT
 You are an expert AI Financial Analyst assistant helping an admin review a business loan application document.
+The current date is {$currentDate}. Do not treat recent dates (like 2025 or 2026) as future-dated.
 
 You have access to:
 1. The extracted text from the document
@@ -288,7 +291,7 @@ PROMPT . "\n\n" . $documentContext;
                 ]),
             ]);
 
-            $response = json_decode((string)$result['body'], true);
+            $response = json_decode((string) $result['body'], true);
 
             return [
                 'success' => true,
@@ -301,7 +304,7 @@ PROMPT . "\n\n" . $documentContext;
             return [
                 'success' => false,
                 'error' => $e->getMessage(),
-                'error_code' => $e->getAwsErrorDetails()['Code'] ?? 'BEDROCK_ERROR',
+                'error_code' => $e->getAwsErrorCode() ?? 'BEDROCK_ERROR',
             ];
         } catch (Exception $e) {
             return [

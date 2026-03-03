@@ -45,10 +45,10 @@
                         <p class="text-sm text-gray-600 mt-1">View and manage system users</p>
                     </div>
                     <div class="flex items-center gap-3">
-                        <div class="px-4 py-2 bg-blue-100 text-blue-800 rounded-lg font-semibold text-sm">
+                        <div class="px-4 py-2 bg-emerald-100 text-emerald-800 rounded-lg font-semibold text-sm">
                             {{ count($users) }} Users
                         </div>
-                        <button onclick="openAddModal()" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-4 py-2.5 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all">
+                        <button onclick="openAddModal()" class="inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white px-4 py-2.5 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                             </svg>
@@ -64,7 +64,7 @@
                         </svg>
                         <p class="text-gray-500 text-lg font-medium mb-2">No users found</p>
                         <p class="text-gray-400 text-sm mb-6">Get started by creating your first user</p>
-                        <button onclick="openAddModal()" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-semibold transition-colors">
+                        <button onclick="openAddModal()" class="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-6 py-2.5 rounded-lg font-semibold transition-colors">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                             </svg>
@@ -89,13 +89,13 @@
                                 @forelse($users as $index => $user)
                                     <tr class="hover:bg-gray-50 transition-colors duration-150">
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold text-sm">
+                                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 font-bold text-sm">
                                                 {{ $index + 1 }}
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center gap-3">
-                                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center text-white font-bold text-sm">
+                                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-teal-400 to-emerald-600 flex items-center justify-center text-white font-bold text-sm">
                                                     {{ strtoupper(substr($user->name, 0, 1)) }}
                                                 </div>
                                                 <span class="text-sm font-semibold text-gray-900">{{ $user->name }}</span>
@@ -127,7 +127,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <div class="flex gap-2">
                                                 <a href="{{ route('admin.users.documents', $user->id) }}" 
-                                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 text-teal-600 hover:bg-teal-50 rounded transition-colors"
                                                     title="View Documents & Messages">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
@@ -135,7 +135,7 @@
                                                     Messages
                                                 </a>
                                                 <button onclick="editUser({{ $user->id }}, '{{ $user->name }}', '{{ $user->email }}', '{{ $user->role }}')" 
-                                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 text-indigo-600 hover:bg-indigo-50 rounded transition-colors">
+                                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 text-emerald-600 hover:bg-emerald-50 rounded transition-colors">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                                     </svg>
@@ -165,7 +165,7 @@
     <div id="userModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-lg shadow-2xl max-w-md w-full">
             <!-- Modal Header -->
-            <div class="px-6 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 border-b border-blue-200">
+            <div class="px-6 py-4 bg-gradient-to-r from-teal-600 to-emerald-600 border-b border-emerald-200">
                 <h3 id="modalTitle" class="text-lg font-bold text-white">Add User</h3>
             </div>
 
@@ -179,7 +179,7 @@
                         Full Name <span class="text-red-600">*</span>
                     </label>
                     <input type="text" id="modal_name" name="name" placeholder="e.g., John Doe"
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 transition-all" required>
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-900 transition-all" required>
                     <p id="name_error" class="text-red-600 text-sm mt-1 hidden"></p>
                 </div>
 
@@ -189,7 +189,7 @@
                         Email Address <span class="text-red-600">*</span>
                     </label>
                     <input type="email" id="modal_email" name="email" placeholder="e.g., user@example.com"
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 transition-all" required>
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-900 transition-all" required>
                     <p id="email_error" class="text-red-600 text-sm mt-1 hidden"></p>
                 </div>
 
@@ -200,7 +200,7 @@
                     </label>
                     <div class="relative">
                         <input type="password" id="modal_password" name="password" placeholder="Minimum 8 characters"
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 transition-all" required>
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-900 transition-all" required>
                         <button type="button" onclick="togglePasswordVisibility('modal_password')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -218,7 +218,7 @@
                     </label>
                     <div class="relative">
                         <input type="password" id="modal_password_confirmation" name="password_confirmation" placeholder="Confirm password"
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 transition-all" required>
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-900 transition-all" required>
                         <button type="button" onclick="togglePasswordVisibility('modal_password_confirmation')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -234,7 +234,7 @@
                     <label for="modal_role" class="block text-sm font-semibold text-gray-900 mb-2">
                         User Role <span class="text-red-600">*</span>
                     </label>
-                    <select id="modal_role" name="role" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 transition-all" required>
+                    <select id="modal_role" name="role" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-900 transition-all" required>
                         <option value="">Select a role</option>
                         <option value="admin">Administrator</option>
                         <option value="client">Client</option>
@@ -248,7 +248,7 @@
                 <button type="button" onclick="closeModal()" class="flex-1 px-4 py-2.5 border border-gray-300 bg-white hover:bg-gray-100 text-gray-700 rounded-lg font-semibold transition-colors">
                     Cancel
                 </button>
-                <button type="button" onclick="submitUserForm()" class="flex-1 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-lg font-semibold transition-all">
+                <button type="button" onclick="submitUserForm()" class="flex-1 px-4 py-2.5 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white rounded-lg font-semibold transition-all">
                     <span id="submitBtnText">Save</span>
                 </button>
             </div>

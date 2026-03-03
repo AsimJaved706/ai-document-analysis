@@ -7,9 +7,9 @@ We encountered an error processing your request. The link you followed may be ex
 
 Please contact us for assistance:
 
-**Analyst Saferwealth**  
-Sean Cavanagh, Founder & CEO  
-416-545-9559  
+**SaferWealth Analyst**
+Sean Cavanagh, Founder & CEO
+416-545-9559
 [info@saferwealth.com](mailto:info@saferwealth.com)
 
 @endcomponent

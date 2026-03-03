@@ -6,9 +6,9 @@
             @forelse($users as $user)
                 <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition overflow-hidden border border-gray-200">
                     <!-- User Header -->
-                    <div class="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white">
+                    <div class="bg-gradient-to-r from-teal-500 to-emerald-600 p-6 text-white">
                         <h3 class="text-xl font-bold">{{ $user->name }}</h3>
-                        <p class="text-sm text-blue-100 mt-1">{{ $user->email }}</p>
+                        <p class="text-sm text-teal-100 mt-1">{{ $user->email }}</p>
                     </div>
 
                     <!-- Documents List -->
@@ -24,7 +24,7 @@
                                             <p class="text-xs text-gray-600">{{ ucwords(str_replace('_', ' ', $doc->doc_type)) }}</p>
                                         </div>
                                         <div class="flex items-center gap-2">
-                                            <span class="text-xs font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                                            <span class="text-xs font-semibold bg-teal-100 text-teal-800 px-2 py-1 rounded">
                                                 {{ $doc->messages()->count() }}
                                             </span>
                                             <span class="text-xs font-semibold {{ 
@@ -39,7 +39,7 @@
                                 @endforeach
                             </div>
 
-                            <a href="{{ route('admin.chats.index', $user->id) }}" class="w-full block text-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">
+                            <a href="{{ route('admin.chats.index', $user->id) }}" class="w-full block text-center px-4 py-2 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 transition">
                                 View Chats
                             </a>
                         @endif

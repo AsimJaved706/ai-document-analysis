@@ -15,10 +15,6 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
@@ -30,6 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_update_requested_at',
         'profile_update_requested_by',
         'email_unsubscribe_token',
+        'google_id',
     ];
 
     /**

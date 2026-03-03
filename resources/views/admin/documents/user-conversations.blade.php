@@ -22,7 +22,7 @@
                         >
                             <p class="text-sm font-semibold text-gray-900 truncate">{{ $user->name }}</p>
                             <p class="text-xs text-gray-500 truncate">{{ $user->email }}</p>
-                            <p class="text-xs text-indigo-600 mt-1">{{ $user->documents_count }} doc{{ $user->documents_count !== 1 ? 's' : '' }}</p>
+                            <p class="text-xs text-emerald-600 mt-1">{{ $user->documents_count }} doc{{ $user->documents_count !== 1 ? 's' : '' }}</p>
                         </button>
                     @endforeach
                 </div>
@@ -47,13 +47,13 @@
                             <input
                                 type="text"
                                 id="messageInput"
-                                class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
                                 placeholder="Ask about this user's full document set..."
                                 required
                             >
                             <button
                                 type="submit"
-                                class="px-5 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+                                class="px-5 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
                             >
                                 Send
                             </button>
@@ -86,7 +86,7 @@
 
             container.innerHTML = messages.map(msg => `
                 <div class="flex ${msg.sender_type === 'ai' ? 'justify-start' : 'justify-end'}">
-                    <div class="max-w-3xl ${msg.sender_type === 'ai' ? 'bg-gray-200 text-gray-900' : 'bg-indigo-600 text-white'} px-4 py-3 rounded-lg">
+                    <div class="max-w-3xl ${msg.sender_type === 'ai' ? 'bg-gray-200 text-gray-900' : 'bg-emerald-600 text-white'} px-4 py-3 rounded-lg">
                         <p class="text-xs font-semibold mb-1">${msg.sender_type === 'ai' ? 'AI Assistant' : 'You'}</p>
                         <p class="text-sm">${formatMessage(msg.message)}</p>
                         <p class="text-xs opacity-70 mt-1">${new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
@@ -98,8 +98,8 @@
         }
 
         async function loadUserConversation(userId) {
-            document.querySelectorAll('.user-item').forEach(item => item.classList.remove('bg-indigo-50', 'border-indigo-300'));
-            document.querySelector(`[data-user-id="${userId}"]`)?.classList.add('bg-indigo-50', 'border-indigo-300');
+            document.querySelectorAll('.user-item').forEach(item => item.classList.remove('bg-emerald-50', 'border-emerald-300'));
+            document.querySelector(`[data-user-id="${userId}"]`)?.classList.add('bg-emerald-50', 'border-emerald-300');
 
             const res = await fetch(`/admin/users/${userId}/document-chat/conversation`);
             const data = await res.json();
@@ -135,7 +135,7 @@
 
             container.innerHTML += `
                 <div class="flex justify-end">
-                    <div class="max-w-3xl bg-indigo-600 text-white px-4 py-3 rounded-lg">
+                    <div class="max-w-3xl bg-emerald-600 text-white px-4 py-3 rounded-lg">
                         <p class="text-xs font-semibold mb-1">You</p>
                         <p class="text-sm">${escapeHtml(message)}</p>
                     </div>
