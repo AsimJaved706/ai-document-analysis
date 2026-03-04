@@ -20,8 +20,8 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
-        // Get all required document types
-        $requirements = DocumentRequirement::where('required', true)
+        // Get all active document types (required and optional)
+        $requirements = DocumentRequirement::query()
             ->where('active', true)
             ->orderBy('sort_order')
             ->get();
