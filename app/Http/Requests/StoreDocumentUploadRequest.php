@@ -25,7 +25,7 @@ class StoreDocumentUploadRequest extends FormRequest
 
         return [
             'doc_type' => ['required', 'string', 'in:' . $docTypes],
-            'file' => ['required', 'file', 'max:51200', 'mimes:pdf,doc,docx,jpg,jpeg,png'],
+            'file' => ['required', 'file', 'max:51200', 'mimes:pdf,jpg,jpeg,png'],
         ];
     }
 
@@ -35,7 +35,7 @@ class StoreDocumentUploadRequest extends FormRequest
             'file.required' => 'A document file is required.',
             'file.uploaded' => 'Upload failed - file size exceeds server limits (max 50MB). Try reducing file size or contact support.',
             'file.max' => 'The file may not be larger than 50MB.',
-            'file.mimes' => 'The file must be a PDF, Word document, or image (JPG/PNG).',
+            'file.mimes' => 'The file must be a PDF or image (JPG/PNG).',
             'doc_type.in' => 'Invalid document type.',
         ];
     }
