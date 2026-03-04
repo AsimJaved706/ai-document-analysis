@@ -599,7 +599,7 @@ PROMPT;
             'classification' => null,
             'extracted_data' => [],
             'validation_checks' => [],
-            'risk_flags' => ['AI analysis output was not valid JSON. Manual review required.'],
+            'risk_flags' => ['We could not fully verify this document automatically. Please review the file and re-upload if needed.'],
             'missing_fields' => [],
             'raw_analysis' => $response,
             'confidence_score' => 50, // Low confidence if we couldn't parse
@@ -632,44 +632,104 @@ PROMPT;
 
     protected function decodeJsonObjectFromModelResponse(string $response): ?array
     {
-        $candidate = $this->extractJsonCandidate($response);
+        // Try each extraction strategy in order; move to the next if decoding fails
+        foreach ($this->extractJsonCandidates($response) as $candidate) {
+            $decoded = json_decode($candidate, true);
+            if (is_array($decoded)) {
+                return $decoded;
+            }
 
-        if ($candidate === null) {
-            return null;
+            // Attempt repair: strip trailing commas before } or ]
+            $repaired = preg_replace('/,\s*([}\]])/', '$1', $candidate);
+            if (is_string($repaired)) {
+                $decoded = json_decode($repaired, true);
+                if (is_array($decoded)) {
+                    return $decoded;
+                }
+            }
         }
 
-        $decoded = json_decode($candidate, true);
-        if (is_array($decoded)) {
-            return $decoded;
-        }
-
-        $repaired = preg_replace('/,\s*([}\]])/', '$1', $candidate);
-        if (!is_string($repaired)) {
-            return null;
-        }
-
-        $decoded = json_decode($repaired, true);
-        return is_array($decoded) ? $decoded : null;
+        return null;
     }
 
-    protected function extractJsonCandidate(string $response): ?string
+    /**
+     * Yield JSON candidate strings from the model response using multiple strategies.
+     * Each strategy is tried in order; the caller decides whether the result is valid.
+     *
+     * @return \Generator<string>
+     */
+    protected function extractJsonCandidates(string $response): \Generator
     {
-        if (preg_match('/```json\s*(\{[\s\S]*?\})\s*```/i', $response, $matches) === 1 && isset($matches[1])) {
-            return trim($matches[1]);
+        // Strategy 1: ```json ... ``` code fence (greedy)
+        if (preg_match('/```json\s*(\{[\s\S]*\})\s*```/i', $response, $m) === 1 && isset($m[1])) {
+            yield trim($m[1]);
         }
 
-        if (preg_match('/```\s*(\{[\s\S]*?\})\s*```/i', $response, $matches) === 1 && isset($matches[1])) {
-            return trim($matches[1]);
+        // Strategy 2: ``` ... ``` generic code fence (greedy)
+        if (preg_match('/```\s*(\{[\s\S]*\})\s*```/i', $response, $m) === 1 && isset($m[1])) {
+            yield trim($m[1]);
         }
 
+        // Strategy 3: first { to last } in the entire response
         $start = strpos($response, '{');
         $end = strrpos($response, '}');
-
-        if ($start === false || $end === false || $end <= $start) {
-            return null;
+        if ($start !== false && $end !== false && $end > $start) {
+            yield trim(substr($response, $start, ($end - $start) + 1));
         }
 
-        return trim(substr($response, $start, ($end - $start) + 1));
+        // Strategy 4: bracket-balanced extraction from the first {
+        if ($start !== false) {
+            $balanced = $this->extractBalancedJson($response, $start);
+            if ($balanced !== null) {
+                yield $balanced;
+            }
+        }
+    }
+
+    /**
+     * Walk characters from $offset, counting { and }, to extract
+     * a balanced JSON object even when there is trailing text.
+     */
+    protected function extractBalancedJson(string $text, int $offset): ?string
+    {
+        $depth = 0;
+        $inString = false;
+        $escape = false;
+        $len = strlen($text);
+
+        for ($i = $offset; $i < $len; $i++) {
+            $char = $text[$i];
+
+            if ($escape) {
+                $escape = false;
+                continue;
+            }
+
+            if ($char === '\\' && $inString) {
+                $escape = true;
+                continue;
+            }
+
+            if ($char === '"') {
+                $inString = !$inString;
+                continue;
+            }
+
+            if ($inString) {
+                continue;
+            }
+
+            if ($char === '{') {
+                $depth++;
+            } elseif ($char === '}') {
+                $depth--;
+                if ($depth === 0) {
+                    return trim(substr($text, $offset, ($i - $offset) + 1));
+                }
+            }
+        }
+
+        return null;
     }
 
     /**
