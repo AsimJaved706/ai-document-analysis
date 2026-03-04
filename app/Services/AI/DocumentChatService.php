@@ -322,8 +322,8 @@ PROMPT . "\n\n" . $documentContext;
                     ],
                 ]);
 
-                $outputBlocks = $result['output']['message']['content'] ?? [];
-                $content = $this->extractTextFromContentBlocks(is_array($outputBlocks) ? $outputBlocks : []);
+                $outputBlocks = $result['output']['message']['content'] ?? null;
+                $content = $this->extractTextFromMixed($outputBlocks);
 
                 if ($content === '') {
                     return [
@@ -355,8 +355,8 @@ PROMPT . "\n\n" . $documentContext;
 
             $response = json_decode((string) $result['body'], true);
 
-            $contentBlocks = $response['content'] ?? [];
-            $content = $this->extractTextFromContentBlocks(is_array($contentBlocks) ? $contentBlocks : []);
+            $contentBlocks = $response['content'] ?? null;
+            $content = $this->extractTextFromMixed($contentBlocks);
 
             if ($content === '') {
                 return [
@@ -387,24 +387,55 @@ PROMPT . "\n\n" . $documentContext;
     }
 
     /**
-     * Extract and join all text blocks returned by Bedrock/Claude.
+     * Extract text from Bedrock/Claude content payloads with mixed shapes.
      *
-     * @param array<int, mixed> $blocks
+     * @param mixed $payload
      */
-    protected function extractTextFromContentBlocks(array $blocks): string
+    protected function extractTextFromMixed(mixed $payload): string
     {
-        $parts = [];
+        if (is_string($payload)) {
+            return trim($payload);
+        }
 
-        foreach ($blocks as $block) {
-            if (is_array($block) && is_string($block['text'] ?? null)) {
-                $text = trim($block['text']);
+        if (!is_array($payload)) {
+            return '';
+        }
+
+        $parts = [];
+        $this->collectTextParts($payload, $parts);
+
+        return trim(implode("\n\n", $parts));
+    }
+
+    /**
+     * Recursively collect text values from nested content blocks.
+     *
+     * @param array<int|string, mixed> $node
+     * @param array<int, string> $parts
+     */
+    protected function collectTextParts(array $node, array &$parts): void
+    {
+        foreach ($node as $key => $value) {
+            if ($key === 'text' && is_string($value)) {
+                $text = trim($value);
                 if ($text !== '') {
                     $parts[] = $text;
                 }
+                continue;
+            }
+
+            if ($key === 'content' && is_string($value)) {
+                $text = trim($value);
+                if ($text !== '') {
+                    $parts[] = $text;
+                }
+                continue;
+            }
+
+            if (is_array($value)) {
+                $this->collectTextParts($value, $parts);
             }
         }
-
-        return trim(implode("\n\n", $parts));
     }
 
     /**
