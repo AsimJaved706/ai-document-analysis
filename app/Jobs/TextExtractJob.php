@@ -45,7 +45,7 @@ class TextExtractJob implements ShouldQueue
     /**
      * The number of seconds the job can run before timing out.
      */
-    public int $timeout = 300; // 5 minutes
+    public int $timeout = 600; // 5 minutes
 
 
     public function __construct(
